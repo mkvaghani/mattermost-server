@@ -432,25 +432,37 @@ func (me *TestHelper) LoginSystemAdmin() {
 
 func (me *TestHelper) LoginBasicWithClient(client *model.Client4) {
 	utils.DisableDebugLogForTest()
-	client.Login(me.BasicUser.Email, me.BasicUser.Password)
+	_, resp := client.Login(me.BasicUser.Email, me.BasicUser.Password)
+	if resp.Error != nil {
+		panic(resp.Error)
+	}
 	utils.EnableDebugLogForTest()
 }
 
 func (me *TestHelper) LoginBasic2WithClient(client *model.Client4) {
 	utils.DisableDebugLogForTest()
-	client.Login(me.BasicUser2.Email, me.BasicUser2.Password)
+	_, resp := client.Login(me.BasicUser2.Email, me.BasicUser2.Password)
+	if resp.Error != nil {
+		panic(resp.Error)
+	}
 	utils.EnableDebugLogForTest()
 }
 
 func (me *TestHelper) LoginTeamAdminWithClient(client *model.Client4) {
 	utils.DisableDebugLogForTest()
-	client.Login(me.TeamAdminUser.Email, me.TeamAdminUser.Password)
+	_, resp := client.Login(me.TeamAdminUser.Email, me.TeamAdminUser.Password)
+	if resp.Error != nil {
+		panic(resp.Error)
+	}
 	utils.EnableDebugLogForTest()
 }
 
 func (me *TestHelper) LoginSystemAdminWithClient(client *model.Client4) {
 	utils.DisableDebugLogForTest()
-	client.Login(me.SystemAdminUser.Email, me.SystemAdminUser.Password)
+	_, resp := client.Login(me.SystemAdminUser.Email, me.SystemAdminUser.Password)
+	if resp.Error != nil {
+		panic(resp.Error)
+	}
 	utils.EnableDebugLogForTest()
 }
 
