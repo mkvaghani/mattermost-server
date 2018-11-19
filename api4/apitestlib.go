@@ -196,6 +196,7 @@ func (me *TestHelper) InitBasic() *TestHelper {
 	me.TeamAdminUser = me.CreateUser()
 	me.App.UpdateUserRoles(me.TeamAdminUser.Id, model.SYSTEM_USER_ROLE_ID, false)
 	me.LoginTeamAdmin()
+
 	me.BasicTeam = me.CreateTeam()
 	me.BasicChannel = me.CreatePublicChannel()
 	me.BasicPrivateChannel = me.CreatePrivateChannel()
@@ -263,7 +264,10 @@ func (me *TestHelper) CreateTeamWithClient(client *model.Client4) *model.Team {
 	}
 
 	utils.DisableDebugLogForTest()
-	rteam, _ := client.CreateTeam(team)
+	rteam, resp := client.CreateTeam(team)
+	if resp.Error != nil {
+		panic(resp.Error)
+	}
 	utils.EnableDebugLogForTest()
 	return rteam
 }
@@ -315,7 +319,10 @@ func (me *TestHelper) CreateChannelWithClientAndTeam(client *model.Client4, chan
 	}
 
 	utils.DisableDebugLogForTest()
-	rchannel, _ := client.CreateChannel(channel)
+	rchannel, resp := client.CreateChannel(channel)
+	if resp.Error != nil {
+		panic(resp.Error)
+	}
 	utils.EnableDebugLogForTest()
 	return rchannel
 }
