@@ -173,12 +173,12 @@ func SetupConfig(updateConfig func(cfg *model.Config)) *TestHelper {
 }
 
 func (me *TestHelper) TearDown() {
-	utils.DisableDebugLogForTest()
+	// utils.DisableDebugLogForTest()
 
 	me.App.Shutdown()
 	os.Remove(me.tempConfigPath)
 
-	utils.EnableDebugLogForTest()
+	// utils.EnableDebugLogForTest()
 
 	if err := recover(); err != nil {
 		StopTestStore()
@@ -263,12 +263,12 @@ func (me *TestHelper) CreateTeamWithClient(client *model.Client4) *model.Team {
 		Type:        model.TEAM_OPEN,
 	}
 
-	utils.DisableDebugLogForTest()
+	// utils.DisableDebugLogForTest()
 	rteam, resp := client.CreateTeam(team)
 	if resp.Error != nil {
 		panic(resp.Error)
 	}
-	utils.EnableDebugLogForTest()
+	// utils.EnableDebugLogForTest()
 	return rteam
 }
 
@@ -284,7 +284,7 @@ func (me *TestHelper) CreateUserWithClient(client *model.Client4) *model.User {
 		Password:  "Password1",
 	}
 
-	utils.DisableDebugLogForTest()
+	// utils.DisableDebugLogForTest()
 	ruser, response := client.CreateUser(user)
 	if response.Error != nil {
 		panic(response.Error)
@@ -292,7 +292,7 @@ func (me *TestHelper) CreateUserWithClient(client *model.Client4) *model.User {
 
 	ruser.Password = "Password1"
 	store.Must(me.App.Srv.Store.User().VerifyEmail(ruser.Id))
-	utils.EnableDebugLogForTest()
+	// utils.EnableDebugLogForTest()
 	return ruser
 }
 
@@ -318,12 +318,12 @@ func (me *TestHelper) CreateChannelWithClientAndTeam(client *model.Client4, chan
 		TeamId:      teamId,
 	}
 
-	utils.DisableDebugLogForTest()
+	// utils.DisableDebugLogForTest()
 	rchannel, resp := client.CreateChannel(channel)
 	if resp.Error != nil {
 		panic(resp.Error)
 	}
-	utils.EnableDebugLogForTest()
+	// utils.EnableDebugLogForTest()
 	return rchannel
 }
 
@@ -347,12 +347,12 @@ func (me *TestHelper) CreatePostWithClient(client *model.Client4, channel *model
 		Message:   "message_" + id,
 	}
 
-	utils.DisableDebugLogForTest()
+	// utils.DisableDebugLogForTest()
 	rpost, resp := client.CreatePost(post)
 	if resp.Error != nil {
 		panic(resp.Error)
 	}
-	utils.EnableDebugLogForTest()
+	// utils.EnableDebugLogForTest()
 	return rpost
 }
 
@@ -365,12 +365,12 @@ func (me *TestHelper) CreatePinnedPostWithClient(client *model.Client4, channel 
 		IsPinned:  true,
 	}
 
-	utils.DisableDebugLogForTest()
+	// utils.DisableDebugLogForTest()
 	rpost, resp := client.CreatePost(post)
 	if resp.Error != nil {
 		panic(resp.Error)
 	}
-	utils.EnableDebugLogForTest()
+	// utils.EnableDebugLogForTest()
 	return rpost
 }
 
@@ -380,12 +380,12 @@ func (me *TestHelper) CreateMessagePostWithClient(client *model.Client4, channel
 		Message:   message,
 	}
 
-	utils.DisableDebugLogForTest()
+	// utils.DisableDebugLogForTest()
 	rpost, resp := client.CreatePost(post)
 	if resp.Error != nil {
 		panic(resp.Error)
 	}
-	utils.EnableDebugLogForTest()
+	// utils.EnableDebugLogForTest()
 	return rpost
 }
 
@@ -401,7 +401,7 @@ func (me *TestHelper) CreateMessagePostNoClient(channel *model.Channel, message 
 }
 
 func (me *TestHelper) CreateDmChannel(user *model.User) *model.Channel {
-	utils.DisableDebugLogForTest()
+	// utils.DisableDebugLogForTest()
 	var err *model.AppError
 	var channel *model.Channel
 	if channel, err = me.App.CreateDirectChannel(me.BasicUser.Id, user.Id); err != nil {
@@ -410,7 +410,7 @@ func (me *TestHelper) CreateDmChannel(user *model.User) *model.Channel {
 		time.Sleep(time.Second)
 		panic(err)
 	}
-	utils.EnableDebugLogForTest()
+	// utils.EnableDebugLogForTest()
 	return channel
 }
 
@@ -431,43 +431,43 @@ func (me *TestHelper) LoginSystemAdmin() {
 }
 
 func (me *TestHelper) LoginBasicWithClient(client *model.Client4) {
-	utils.DisableDebugLogForTest()
+	// utils.DisableDebugLogForTest()
 	_, resp := client.Login(me.BasicUser.Email, me.BasicUser.Password)
 	if resp.Error != nil {
 		panic(resp.Error)
 	}
-	utils.EnableDebugLogForTest()
+	// utils.EnableDebugLogForTest()
 }
 
 func (me *TestHelper) LoginBasic2WithClient(client *model.Client4) {
-	utils.DisableDebugLogForTest()
+	// utils.DisableDebugLogForTest()
 	_, resp := client.Login(me.BasicUser2.Email, me.BasicUser2.Password)
 	if resp.Error != nil {
 		panic(resp.Error)
 	}
-	utils.EnableDebugLogForTest()
+	// utils.EnableDebugLogForTest()
 }
 
 func (me *TestHelper) LoginTeamAdminWithClient(client *model.Client4) {
-	utils.DisableDebugLogForTest()
+	// utils.DisableDebugLogForTest()
 	_, resp := client.Login(me.TeamAdminUser.Email, me.TeamAdminUser.Password)
 	if resp.Error != nil {
 		panic(resp.Error)
 	}
-	utils.EnableDebugLogForTest()
+	// utils.EnableDebugLogForTest()
 }
 
 func (me *TestHelper) LoginSystemAdminWithClient(client *model.Client4) {
-	utils.DisableDebugLogForTest()
+	// utils.DisableDebugLogForTest()
 	_, resp := client.Login(me.SystemAdminUser.Email, me.SystemAdminUser.Password)
 	if resp.Error != nil {
 		panic(resp.Error)
 	}
-	utils.EnableDebugLogForTest()
+	// utils.EnableDebugLogForTest()
 }
 
 func (me *TestHelper) UpdateActiveUser(user *model.User, active bool) {
-	utils.DisableDebugLogForTest()
+	// utils.DisableDebugLogForTest()
 
 	_, err := me.App.UpdateActive(user, active)
 	if err != nil {
@@ -477,11 +477,11 @@ func (me *TestHelper) UpdateActiveUser(user *model.User, active bool) {
 		panic(err)
 	}
 
-	utils.EnableDebugLogForTest()
+	// utils.EnableDebugLogForTest()
 }
 
 func (me *TestHelper) LinkUserToTeam(user *model.User, team *model.Team) {
-	utils.DisableDebugLogForTest()
+	// utils.DisableDebugLogForTest()
 
 	err := me.App.JoinUserToTeam(team, user, "")
 	if err != nil {
@@ -491,11 +491,11 @@ func (me *TestHelper) LinkUserToTeam(user *model.User, team *model.Team) {
 		panic(err)
 	}
 
-	utils.EnableDebugLogForTest()
+	// utils.EnableDebugLogForTest()
 }
 
 func (me *TestHelper) AddUserToChannel(user *model.User, channel *model.Channel) *model.ChannelMember {
-	utils.DisableDebugLogForTest()
+	// utils.DisableDebugLogForTest()
 
 	member, err := me.App.AddUserToChannel(user, channel)
 	if err != nil {
@@ -505,7 +505,7 @@ func (me *TestHelper) AddUserToChannel(user *model.User, channel *model.Channel)
 		panic(err)
 	}
 
-	utils.EnableDebugLogForTest()
+	// utils.EnableDebugLogForTest()
 
 	return member
 }
@@ -782,67 +782,67 @@ func (me *TestHelper) cleanupTestFile(info *model.FileInfo) error {
 }
 
 func (me *TestHelper) MakeUserChannelAdmin(user *model.User, channel *model.Channel) {
-	utils.DisableDebugLogForTest()
+	// utils.DisableDebugLogForTest()
 
 	if cmr := <-me.App.Srv.Store.Channel().GetMember(channel.Id, user.Id); cmr.Err == nil {
 		cm := cmr.Data.(*model.ChannelMember)
 		cm.SchemeAdmin = true
 		if sr := <-me.App.Srv.Store.Channel().UpdateMember(cm); sr.Err != nil {
-			utils.EnableDebugLogForTest()
+			// utils.EnableDebugLogForTest()
 			panic(sr.Err)
 		}
 	} else {
-		utils.EnableDebugLogForTest()
+		// utils.EnableDebugLogForTest()
 		panic(cmr.Err)
 	}
 
-	utils.EnableDebugLogForTest()
+	// utils.EnableDebugLogForTest()
 }
 
 func (me *TestHelper) UpdateUserToTeamAdmin(user *model.User, team *model.Team) {
-	utils.DisableDebugLogForTest()
+	// utils.DisableDebugLogForTest()
 
 	if tmr := <-me.App.Srv.Store.Team().GetMember(team.Id, user.Id); tmr.Err == nil {
 		tm := tmr.Data.(*model.TeamMember)
 		tm.SchemeAdmin = true
 		if sr := <-me.App.Srv.Store.Team().UpdateMember(tm); sr.Err != nil {
-			utils.EnableDebugLogForTest()
+			// utils.EnableDebugLogForTest()
 			panic(sr.Err)
 		}
 	} else {
-		utils.EnableDebugLogForTest()
+		// utils.EnableDebugLogForTest()
 		mlog.Error(tmr.Err.Error())
 
 		time.Sleep(time.Second)
 		panic(tmr.Err)
 	}
 
-	utils.EnableDebugLogForTest()
+	// utils.EnableDebugLogForTest()
 }
 
 func (me *TestHelper) UpdateUserToNonTeamAdmin(user *model.User, team *model.Team) {
-	utils.DisableDebugLogForTest()
+	// utils.DisableDebugLogForTest()
 
 	if tmr := <-me.App.Srv.Store.Team().GetMember(team.Id, user.Id); tmr.Err == nil {
 		tm := tmr.Data.(*model.TeamMember)
 		tm.SchemeAdmin = false
 		if sr := <-me.App.Srv.Store.Team().UpdateMember(tm); sr.Err != nil {
-			utils.EnableDebugLogForTest()
+			// utils.EnableDebugLogForTest()
 			panic(sr.Err)
 		}
 	} else {
-		utils.EnableDebugLogForTest()
+		// utils.EnableDebugLogForTest()
 		mlog.Error(tmr.Err.Error())
 
 		time.Sleep(time.Second)
 		panic(tmr.Err)
 	}
 
-	utils.EnableDebugLogForTest()
+	// utils.EnableDebugLogForTest()
 }
 
 func (me *TestHelper) SaveDefaultRolePermissions() map[string][]string {
-	utils.DisableDebugLogForTest()
+	// utils.DisableDebugLogForTest()
 
 	results := make(map[string][]string)
 
@@ -856,24 +856,24 @@ func (me *TestHelper) SaveDefaultRolePermissions() map[string][]string {
 	} {
 		role, err1 := me.App.GetRoleByName(roleName)
 		if err1 != nil {
-			utils.EnableDebugLogForTest()
+			// utils.EnableDebugLogForTest()
 			panic(err1)
 		}
 
 		results[roleName] = role.Permissions
 	}
 
-	utils.EnableDebugLogForTest()
+	// utils.EnableDebugLogForTest()
 	return results
 }
 
 func (me *TestHelper) RestoreDefaultRolePermissions(data map[string][]string) {
-	utils.DisableDebugLogForTest()
+	// utils.DisableDebugLogForTest()
 
 	for roleName, permissions := range data {
 		role, err1 := me.App.GetRoleByName(roleName)
 		if err1 != nil {
-			utils.EnableDebugLogForTest()
+			// utils.EnableDebugLogForTest()
 			panic(err1)
 		}
 
@@ -885,20 +885,20 @@ func (me *TestHelper) RestoreDefaultRolePermissions(data map[string][]string) {
 
 		_, err2 := me.App.UpdateRole(role)
 		if err2 != nil {
-			utils.EnableDebugLogForTest()
+			// utils.EnableDebugLogForTest()
 			panic(err2)
 		}
 	}
 
-	utils.EnableDebugLogForTest()
+	// utils.EnableDebugLogForTest()
 }
 
 func (me *TestHelper) RemovePermissionFromRole(permission string, roleName string) {
-	utils.DisableDebugLogForTest()
+	// utils.DisableDebugLogForTest()
 
 	role, err1 := me.App.GetRoleByName(roleName)
 	if err1 != nil {
-		utils.EnableDebugLogForTest()
+		// utils.EnableDebugLogForTest()
 		panic(err1)
 	}
 
@@ -910,7 +910,7 @@ func (me *TestHelper) RemovePermissionFromRole(permission string, roleName strin
 	}
 
 	if strings.Join(role.Permissions, " ") == strings.Join(newPermissions, " ") {
-		utils.EnableDebugLogForTest()
+		// utils.EnableDebugLogForTest()
 		return
 	}
 
@@ -918,25 +918,25 @@ func (me *TestHelper) RemovePermissionFromRole(permission string, roleName strin
 
 	_, err2 := me.App.UpdateRole(role)
 	if err2 != nil {
-		utils.EnableDebugLogForTest()
+		// utils.EnableDebugLogForTest()
 		panic(err2)
 	}
 
-	utils.EnableDebugLogForTest()
+	// utils.EnableDebugLogForTest()
 }
 
 func (me *TestHelper) AddPermissionToRole(permission string, roleName string) {
-	utils.DisableDebugLogForTest()
+	// utils.DisableDebugLogForTest()
 
 	role, err1 := me.App.GetRoleByName(roleName)
 	if err1 != nil {
-		utils.EnableDebugLogForTest()
+		// utils.EnableDebugLogForTest()
 		panic(err1)
 	}
 
 	for _, existingPermission := range role.Permissions {
 		if existingPermission == permission {
-			utils.EnableDebugLogForTest()
+			// utils.EnableDebugLogForTest()
 			return
 		}
 	}
@@ -945,9 +945,9 @@ func (me *TestHelper) AddPermissionToRole(permission string, roleName string) {
 
 	_, err2 := me.App.UpdateRole(role)
 	if err2 != nil {
-		utils.EnableDebugLogForTest()
+		// utils.EnableDebugLogForTest()
 		panic(err2)
 	}
 
-	utils.EnableDebugLogForTest()
+	// utils.EnableDebugLogForTest()
 }
