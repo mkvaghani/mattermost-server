@@ -73,7 +73,9 @@ func setupTestHelper(enterprise bool, updateConfig func(*model.Config)) *TestHel
 		testStore.DropAllTables()
 	}
 
-	permConfig, err := os.Open(utils.FindConfigFile("config.json"))
+	configFile := utils.FindConfigFile("config.json")
+
+	permConfig, err := os.Open(configFile)
 	if err != nil {
 		panic(err)
 	}
@@ -82,7 +84,8 @@ func setupTestHelper(enterprise bool, updateConfig func(*model.Config)) *TestHel
 	if err != nil {
 		panic(err)
 	}
-	_, err = io.Copy(tempConfig, permConfig)
+	written, err := io.Copy(tempConfig, permConfig)
+	mlog.Debug(fmt.Sprintf("wrote %d bytes to temp config from %s", written, configFile))
 	tempConfig.Close()
 	if err != nil {
 		panic(err)
